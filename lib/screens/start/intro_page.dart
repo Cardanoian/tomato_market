@@ -1,5 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:tomato_market/constants/common_size.dart';
+import 'package:tomato_market/states/user_provider.dart';
 import 'package:tomato_market/utils/logger.dart';
 
 class IntroPage extends StatelessWidget {
@@ -8,6 +11,7 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d('current user state: ${context.read<UserProvider>().userState}');
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         Size size = MediaQuery.of(context).size;
@@ -16,7 +20,7 @@ class IntroPage extends StatelessWidget {
 
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: common_padding),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,32 +54,28 @@ class IntroPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Text(
+                Text(
                   '우리 동네 중고 직거래 토마토마켓',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
-                const Text(
+                Text(
                   '''토마토마켓은 동네 직거래 마켓이에요.
 내 동네를 설정하고 시작해보세요!''',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         controller.animateToPage(1,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.ease);
+                            duration: common_duration, curve: Curves.ease);
                         logger.d('on text button clicked!!');
                       },
                       child: Text(
                         '내 동네 설정하고 시작하기',
                         style: Theme.of(context).textTheme.button,
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
                       ),
                     ),
                   ],
